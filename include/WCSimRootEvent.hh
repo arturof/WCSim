@@ -140,6 +140,7 @@ private:
   Double_t fTruetime;
   Int_t   fParentSavedTrackID;
   Float_t fPhotonStartTime;
+  Float_t fPhotonStartEnergy;
   Float_t fPhotonStartPos[3];
   Float_t fPhotonEndPos[3];
   Float_t fPhotonStartDir[3];
@@ -151,6 +152,7 @@ public:
   WCSimRootCherenkovHitTime(Double_t truetime,
 			    Int_t   parentSavedTrackID,
 			    Float_t photonStartTime,
+			    Float_t photonStartEnergy,
 			    Float_t photonStartPos[3],
 			    Float_t photonEndPos[3],
 			    Float_t photonStartDir[3],
@@ -163,6 +165,7 @@ public:
   Int_t     GetParentID() const { return fParentSavedTrackID;} // deprecated
   Int_t     GetParentSavedTrackID() const { return fParentSavedTrackID;}
   Float_t   GetPhotonStartTime() const { return fPhotonStartTime; }
+  Float_t   GetPhotonStartEnergy() const { return fPhotonStartEnergy; }
   Float_t   GetPhotonStartPos(int i) const { return (i<3) ? fPhotonStartPos[i] : 0; }
   Float_t   GetPhotonEndPos(int i) const { return (i<3) ? fPhotonEndPos[i] : 0; }
   Float_t   GetPhotonStartDir(int i) const { return (i<3) ? fPhotonStartDir[i] : 0; }
@@ -181,16 +184,24 @@ private:
   Int_t   fNRayScat;
   Int_t   fNMieScat;
   std::vector<ReflectionSurface_t> fReflec;
+  std::vector<float> fX;
+  std::vector<float> fY;
+  std::vector<float> fZ;
+  std::vector<int> fType;
 
 public:
   WCSimRootCherenkovHitHistory() {}
-  WCSimRootCherenkovHitHistory(Int_t nRayScat, Int_t nMieScat, std::vector<ReflectionSurface_t> refle);
+  WCSimRootCherenkovHitHistory(Int_t nRayScat, Int_t nMieScat, std::vector<ReflectionSurface_t> refle, std::vector<float> &x, std::vector<float> &y, std::vector<float> &z, std::vector<int> & type);
   virtual ~WCSimRootCherenkovHitHistory() { }
   bool CompareAllVariables(const WCSimRootCherenkovHitHistory * c) const;
 
   Int_t     GetNRayScatters() const { return fNRayScat; } // Get the number of Rayleigh scattering a photon experienced
   Int_t     GetNMieScatters() const { return fNMieScat; } // Get the number of Mie scattering a photon experienced
   std::vector<ReflectionSurface_t> GetReflectionSurfaces() const { return fReflec; } //  Get the vector of reflection surfaces a photon experienced
+  std::vector<float> GetX() const { return fX; } //  Get the vector of position X
+  std::vector<float> GetY() const { return fY; } //  Get the vector of position Y
+  std::vector<float> GetZ() const { return fZ; } //  Get the vector of position Z
+  std::vector<int> GetType() const { return fType; } //  Get the vector of position type
 
   ClassDef(WCSimRootCherenkovHitHistory,1)
 };
@@ -511,6 +522,7 @@ public:
 					   std::vector<Double_t>  truetime,
 					   std::vector<Int_t>     primParID,
 					   std::vector<Float_t>   photonStartTime,
+					   std::vector<Float_t>   photonStartEnergy,
 					   std::vector<TVector3>  photonStartPos,
 					   std::vector<TVector3>  photonEndPos,
 					   std::vector<TVector3>  photonStartDir,
@@ -519,7 +531,11 @@ public:
 
   WCSimRootCherenkovHitHistory   *AddCherenkovHitHistory(Int_t nRayScat,
              Int_t nMieScat,
-					   std::vector<ReflectionSurface_t> reflec);
+					   std::vector<ReflectionSurface_t> reflec,
+					   std::vector<float> &x,
+					   std::vector<float> &y,
+					   std::vector<float> &z,
+					   std::vector<int> &type );
   TClonesArray        *GetCherenkovHits() const {return fCherenkovHits;}
   TClonesArray        *GetCherenkovHitTimes() const {return fCherenkovHitTimes;}
   TClonesArray        *GetCherenkovHitHistories() const {return fCherenkovHitHistories;}

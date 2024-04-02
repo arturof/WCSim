@@ -80,6 +80,34 @@ std::string WCSimEnumerations::EnumAsString(BoundaryType_t b)
   return "";
 }
 
+std::string WCSimEnumerations::EnumAsString(StepType_t r)
+{
+  switch(r) {
+  case (kOtherType) :
+    return "OtherType";
+    break;
+  case (kRayleighScattering) :
+    return "RayleighScattering";
+    break;
+  case (kMieScattering) :
+    return "MieScattering";
+    break;
+  case (kBlackSheetReflection) :
+    return "BlacksheetReflection";
+    break;
+  case (kReflectorReflection) :
+    return "ReflectorReflection";
+    break;
+  case (kPhotocathodeReflection) :
+    return "PhotocathodeReflection";
+    break;
+  default:
+    return "";
+    break;
+  }
+  return "";
+}
+ 
 std::string WCSimEnumerations::EnumAsString(ReflectionSurface_t r)
 {
   switch(r) {

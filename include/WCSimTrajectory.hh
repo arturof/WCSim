@@ -118,9 +118,13 @@ public: // with description
   inline void AddPhotonRayScatter(G4int val) { pRayScatter += val; }
   inline void AddPhotonMieScatter(G4int val) { pMieScatter += val; }
   inline void AddPhotonReflection(ReflectionSurface_t val) { pReflec.push_back(val); }
+  inline void AddPhotonStepPosition(G4ThreeVector val) { pStepPos.push_back(val); }
+  inline void AddPhotonStepType(StepType_t val) { pStepType.push_back(val); }
   inline G4int GetPhotonRayScatter() const { return pRayScatter; }
   inline G4int GetPhotonMieScatter() const { return pMieScatter; }
   inline std::vector<ReflectionSurface_t> GetPhotonReflection() const { return pReflec; } 
+  inline std::vector<G4ThreeVector> GetPhotonStepPosition() const { return pStepPos; } 
+  inline std::vector<StepType_t> GetPhotonStepType() const { return pStepType; } 
 
 // Other member functions
    virtual void ShowTrajectory(std::ostream& os=G4cout) const;
@@ -171,6 +175,8 @@ public: // with description
   G4int pRayScatter;
   G4int pMieScatter;
   std::vector<ReflectionSurface_t> pReflec;
+  std::vector<G4ThreeVector> pStepPos;
+  std::vector<StepType_t> pStepType;
   WCSimOpBoundaryProcess* fBoundary;
 };
 

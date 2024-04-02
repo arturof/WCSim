@@ -280,10 +280,14 @@ void WCSimTrajectory::AppendStep(const G4Step* aStep)
       if ( pds->GetProcessSubType() == fOpRayleigh )
       {
         AddPhotonRayScatter(1);
+        AddPhotonStepPosition(aStep->GetPostStepPoint()->GetPosition());
+        AddPhotonStepType(kRayleighScattering);
       }
       else if ( pds->GetProcessSubType() == fOpMieHG )
       {
         AddPhotonMieScatter(1);
+        AddPhotonStepPosition(aStep->GetPostStepPoint()->GetPosition());
+        AddPhotonStepType(kMieScattering);
       }
     }
     else
@@ -295,10 +299,25 @@ void WCSimTrajectory::AppendStep(const G4Step* aStep)
       {
         G4String thePostPVName = thePostPV->GetName();
         ReflectionSurface_t rType = kOtherS;
-        if (thePostPVName.contains("BlackSheet")) rType = kBlackSheetS;
-        else if (thePostPVName.contains("reflector")) rType = kReflectorS;
-        else if (thePostPVName.contains("InteriorWCPMT")) rType = kPhotocathodeS;
+        StepType_t sType = kOtherType;
+        if (thePostPVName.contains("BlackTyvek")) {
+          rType = kBlackSheetS;
+          sType = kBlackSheetReflection;
+        }
+        else if (thePostPVName.contains("reflector")) {
+          rType = kReflectorS;
+          sType = kReflectorReflection;
+        }
+        else if (thePostPVName.contains("InteriorWCPMT")) {
+          rType = kPhotocathodeS;
+          sType = kPhotocathodeReflection;
+        }
+        else {
+          G4cout << "new reflection surface " << thePostPVName << G4endl;
+        }
         AddPhotonReflection(rType);
+        AddPhotonStepType(sType);
+        AddPhotonStepPosition(aStep->GetPostStepPoint()->GetPosition());
       }
     }
   }
