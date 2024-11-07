@@ -3230,12 +3230,14 @@ G4LogicalVolume* WCSimDetectorConstruction::ConstructCylinderNoReplica()
 
   G4LogicalVolume* logicWCExSituMPMT = ConstructExSituMultiPMT(WCPMTName, WCIDCollectionName,"tank");
   G4LogicalVolume* logicWCInSituMPMT = ConstructInSituMultiPMT(WCPMTName, WCIDCollectionName,"tank");
+  G4LogicalVolume* logicBeamPipe = ConstructBeamPipe(); // WCTE beam pipe
 
-  std::vector<G4LogicalVolume*> vlogicWCPMT(4);
+  std::vector<G4LogicalVolume*> vlogicWCPMT(5);
   vlogicWCPMT[0] = logicWCPMT;
   vlogicWCPMT[1] = logicWCPMT2;
   vlogicWCPMT[2] = logicWCExSituMPMT;
   vlogicWCPMT[3] = logicWCInSituMPMT;
+  vlogicWCPMT[4] = logicBeamPipe;
 
   //G4LogicalVolume* logicWCPMT = ConstructPMT(WCPMTName, WCIDCollectionName);
   G4String pmtname = "WCMultiPMT";
@@ -3376,7 +3378,7 @@ G4LogicalVolume* WCSimDetectorConstruction::ConstructCylinderNoReplica()
         new G4PVPlacement(PMTRotation,              // its rotation
               PMTPosition, 
               vlogicWCPMT[pmtType[i]-1],                // its logical volume
-              pmtname,//"WCPMT",             // its name
+              pmtType[i]==5 ? "BeamPipe" : pmtname,             // its name
               !inExtraTower ? logicWCBarrelAnnulus : logicWCExtraTower,         // its mother volume
               false,                     // no boolean operations
               pmtmPMTId[i],
