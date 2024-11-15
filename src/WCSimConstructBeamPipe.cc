@@ -23,7 +23,7 @@ G4LogicalVolume* WCSimDetectorConstruction::ConstructBeamPipe()
   G4double flangeThickness = 8*mm;
   G4double flangeR = 100*mm;
 
-  G4double window_blacksheet_distance = 150*mm;
+  G4double window_blacksheet_distance = 188*mm;
 
   //////////////////////////////////////////////////////////////
   /// 1) Outer logical volume: fill with stainless steel     ///
