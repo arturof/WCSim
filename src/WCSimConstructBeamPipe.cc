@@ -63,7 +63,7 @@ G4LogicalVolume* WCSimDetectorConstruction::ConstructBeamPipe()
 			    "BeamPipe",
 			    0,0,0);
 
-  new G4LogicalSkinSurface("BeamPipeSkinSurface", logicBeamPipe, ReflectorSkinSurface); // assume same as reflector (flat 90% reflectivity)
+  new G4LogicalSkinSurface("BeamPipeSkinSurface", logicBeamPipe, BSSkinSurface); // wrapped with black tyvek
 
   G4VisAttributes *pipeAttributes = new G4VisAttributes();
   pipeAttributes->SetColor(0.85, 0.85, 0.85, 1.0);
