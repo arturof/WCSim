@@ -5208,7 +5208,7 @@ G4LogicalVolume* WCSimDetectorConstruction::ConstructCapsNoReplica(G4bool flipz)
               false,                   //no boolean operation
               0,                       //copy number
               checkOverlaps);          //overlaps checking
-    new G4LogicalSkinSurface("CDSSurface",CDS_logical,BSSkinSurface);
+    new G4LogicalSkinSurface("CDSSurface",CDS_logical,ReflectorSkinSurface);
   }
 
   return logicCapAssembly;
