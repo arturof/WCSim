@@ -59,7 +59,7 @@ G4LogicalVolume* WCSimDetectorConstruction::ConstructBeamPipe()
 		   pipe_RRange_outer);// R Outer
   G4LogicalVolume *logicBeamPipe =
     new G4LogicalVolume(    solidBeamPipe,
-			    G4Material::GetMaterial("Steel"), 
+			    G4Material::GetMaterial("StainlessSteel"), 
 			    "BeamPipe",
 			    0,0,0);
 
@@ -102,6 +102,40 @@ G4LogicalVolume* WCSimDetectorConstruction::ConstructBeamPipe()
                     false,
                     0,
                     checkOverlaps);
+
+  //////////////////////////////
+  /// 3) Beam window         ///
+  //////////////////////////////
+  G4double window_zRange_outer[6] = { pmt_blacksheet_offset+window_blacksheet_distance,                       
+                                      pmt_blacksheet_offset+window_blacksheet_distance+windowThickness };
+  G4double window_RRange_outer[6] = { pipeOuterR,
+                                      pipeOuterR };
+  G4double window_rRange_outer[6] = { 0., 
+                                      0. };
+  G4Polycone* solidBeamWindow = 
+    new G4Polycone("BeamWindow",                    
+		   0.0*deg,
+		   360.0*deg,
+		   2,
+		   window_zRange_outer,
+		   window_rRange_outer, // R Inner
+		   window_RRange_outer);// R Outer
+       
+  G4LogicalVolume *logicBeamWindow =
+    new G4LogicalVolume(    solidBeamWindow,
+			    G4Material::GetMaterial("StainlessSteel"), 
+			    "BeamWindow");
+
+  new G4PVPlacement(0,
+                    G4ThreeVector(0.,0,0),
+                    logicBeamWindow,
+                    "BeamWindow",
+                    logicBeamPipe,
+                    false,
+                    0,
+                    checkOverlaps);
+
+  new G4LogicalSkinSurface("BeamWindowSkinSurface", logicBeamWindow, ReflectorSkinSurface); // assume same as reflector (flat 90% reflectivity)
 
   return logicBeamPipe;
 }
