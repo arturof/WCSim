@@ -565,6 +565,8 @@ private:
 
   // for WCTE beam pipe construction
   G4LogicalVolume* ConstructBeamPipe();
+  // for WCTE photogrammetry housing construction
+  G4LogicalVolume* ConstructCameraHousing();
 
   G4LogicalVolume* ConstructCaps(G4bool);
 

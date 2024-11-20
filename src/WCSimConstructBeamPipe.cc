@@ -10,7 +10,7 @@
 #include "G4SystemOfUnits.hh"
 
 
-// WCTE PMT logical volume construction.
+// WCTE beam pipe logical volume construction.
 // A function of the WCSimDetectorConstruction class
 // dimensions are from the design drawing and hard-coded
 G4LogicalVolume* WCSimDetectorConstruction::ConstructBeamPipe()
