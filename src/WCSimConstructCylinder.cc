@@ -4454,7 +4454,11 @@ G4LogicalVolume* WCSimDetectorConstruction::ConstructCapsNoReplica(G4bool flipz)
 
         G4double newZ = pmtPos[i].z() - capAssemblyZEdge + (barrelCellHeight/2.)*zflip + G4RandGauss::shoot(0,pmtPosVar);
         G4double newR = annulusBlackSheetRmin[1]+(annulusBlackSheetRmin[2]-annulusBlackSheetRmin[1])*(newZ-borderAnnulusZ[1])/(borderAnnulusZ[2]-borderAnnulusZ[1]);
-        if (pmtType[i]==6) newR += -pmtDir[i].z()*mm; // special treatment for camera housing
+        if (pmtType[i]==6) // special treatment for camera housing
+        {
+          newR += -pmtDir[i].z()*mm; 
+          newZ = -zflip*(barrelCellHeight/2.+CapBarrelPMTOffset-pmtDir[i].y()*mm);
+        }
         else newR += pmt_blacksheet_offset;
         G4double newPhi = pmtPhi-phi_offset;
 
